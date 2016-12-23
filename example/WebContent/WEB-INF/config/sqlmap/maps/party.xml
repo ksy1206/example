@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="party">
+
+	<select id="qet_party_list" parameterType="map" resultType="map">
+		SELECT party_no
+			,main_img_nm
+			,main_img_path
+		FROM party_info 
+		WHERE 1=1
+		<if test="search_00 !=null and search_00 != ''">
+			And
+			addr01 LIKE CONCAT('%',#{search_00},'%')
+		</if>						
+		<if test="search_01 != null and search_01 != ''">
+	   		OR
+	   		addr01 LIKE CONCAT('%',#{search_01},'%') 
+	    </if>
+	    <if test="search_02 != null and search_02 != ''">
+	   		OR
+	   		addr01 LIKE CONCAT('%',#{search_02},'%')
+	    </if>
+	    <if test="search_03 != null and search_03 != ''">
+	   		OR
+	   		addr01 LIKE CONCAT('%',#{search_03},'%')
+	    </if>			
+		ORDER BY sort_no ASC , party_no DESC  
+	</select>
+	
+	<select id="get_party_no" parameterType="map" resultType="cmd.vo.PartyVO">
+		SELECT
+			*
+		FROM party_info
+		WHERE
+			party_no = #{party_no}
+	</select>
+	
+</mapper>

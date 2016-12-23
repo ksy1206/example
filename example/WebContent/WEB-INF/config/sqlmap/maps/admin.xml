@@ -1,0 +1,1132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+
+	<select id="get_travel_list" parameterType="map" resultType="cmd.vo.TravelVO">
+		SELECT travel_no 
+			,title
+			,main_img_nm
+			,main_img_path
+		FROM travel_info 
+		WHERE 1=1
+		<if test="hashtag !=null and hashtag != ''">
+			AND hashtag = #{hashtag}
+		</if>						
+		<if test="gugun != null and gugun != ''">
+	   		AND
+	   		addr01 LIKE CONCAT('%',#{gugun},'%') 
+	    </if>
+	    <if test="sido != null and sido != ''">
+	   		AND
+	   		addr01 LIKE CONCAT('%',#{sido},'%')
+	    </if>				
+		ORDER BY travel_no DESC  
+						
+	</select>
+	
+	
+	<select id="get_all_travel_list" parameterType="map" resultType="cmd.vo.TravelVO">
+		SELECT *
+		FROM travel_info 
+		WHERE 1=1
+		<if test="hashtag !=null and hashtag != ''">
+			AND hashtag = #{hashtag}
+		</if>						
+		<if test="gugun != null and gugun != ''">
+	   		AND
+	   		addr01 LIKE CONCAT('%',#{gugun},'%') 
+	    </if>
+	    <if test="sido != null and sido != ''">
+	   		AND
+	   		addr01 LIKE CONCAT('%',#{sido},'%')
+	    </if>	
+	     <if test="travel_no != null and travel_no != ''">
+	   		AND
+	   		travel_no = #{travel_no}
+	    </if>				
+		ORDER BY travel_no DESC  
+						
+	</select>
+	
+	<select id="get_notice_list" parameterType="map" resultType="cmd.vo.NoticeVO">
+		SELECT * FROM notice
+		WHERE 1=1
+		 <if test="notice_no != null and notice_no != ''">
+	   		AND
+	   		notice_no = #{notice_no}
+	    </if>	
+		ORDER BY notice_no DESC  
+						
+	</select>
+	
+	<select id="get_add_info_list" parameterType="map" resultType="cmd.vo.AdminVO">
+		SELECT * FROM add_info			
+	</select>
+	
+		
+	<insert id="save_notice" parameterType="cmd.vo.NoticeVO">
+		/* 공지등록 */
+		INSERT INTO
+			notice
+			(
+		
+				 title
+				,content
+				,insert_date
+				,img_01_nm
+				,img_01_path
+				,img_02_nm
+				,img_02_path
+				,img_03_nm
+				,img_03_path
+			)
+		VALUES
+			(
+				
+				 #{title}
+				, #{content}
+				, NOW()
+				, #{file_01_name}
+				, #{file_01_path}
+				, #{file_02_name}
+				, #{file_02_path}
+				, #{file_03_name}
+				, #{file_03_path}
+				
+			)
+	</insert>
+	
+	<update id="update_notice" parameterType="map">
+		UPDATE 
+			notice
+		SET
+				title = #{title} 
+				,content = #{content} 
+				,update_date = NOW()
+			  <if test="file_01_name !=null and file_01_name != ''">
+				 ,img_01_nm = #{file_01_name} 
+			    ,img_01_path = #{file_01_path} 
+			  </if>		
+			  <if test="file_02_name !=null and file_02_name != ''">
+				 ,img_02_nm = #{file_02_name} 
+			    ,img_02_path = #{file_02_path} 
+			  </if>		
+			  <if test="file_03_name !=null and file_03_name != ''">
+				 ,img_03_nm = #{file_03_name} 
+			    ,img_03_path = #{file_03_path} 
+			  </if>		
+
+			      
+			       
+			
+		WHERE
+			notice_no = #{notice_no}
+	</update>
+	
+	
+	<update id="delete_notice" parameterType="map">
+		DELETE 
+		FROM
+			notice	
+		WHERE
+			notice_no = #{notice_no}
+	</update>
+	
+	
+	
+	
+	<update id="update_add_info" parameterType="map">
+		UPDATE 
+			add_info
+		SET
+				tel = #{tel} 
+				,sms = #{sms} 
+				,fax = #{fax} 
+				,biz_no = #{biz_no} 
+		WHERE
+			1=1	    
+
+	</update>
+	
+		<select id="get_food_list" parameterType="map" resultType="cmd.vo.TravelVO">
+			SELECT travel_no,title
+			,fd_no_1,fd_no_2,fd_no_3,fd_no_4,fd_no_5
+			,fd_no_6,fd_no_7,fd_no_8,fd_no_9,fd_no_10
+			,fd_nm_1,fd_nm_2,fd_nm_3,fd_nm_4,fd_nm_5
+			,fd_nm_6,fd_nm_7,fd_nm_8,fd_nm_9,fd_nm_10
+			
+			FROM travel_info
+			WHERE fd_yn = "Y" 
+			AND (fd_nm_1 != '' OR fd_nm_2 != '' OR fd_nm_3 != '' OR fd_nm_4 != '' OR fd_nm_5 != '' 
+			OR fd_nm_6 != '' OR fd_nm_7 != '' OR fd_nm_8 != '' OR fd_nm_9 != '' OR fd_nm_10 != '' )
+			ORDER BY travel_no DESC  
+						
+	</select>
+	
+	<insert id="save_food" parameterType="cmd.vo.FoodVO">
+		/* 음식등록 */
+		INSERT INTO
+			food_info
+			(
+				food_no
+				,travel_no
+				,title
+				,fd_nm
+				,menu_nm_1
+				,menu_nm_2
+				,menu_nm_3
+				,menu_nm_4
+				,menu_nm_5
+				,menu_nm_6
+				,menu_nm_7
+				,menu_nm_8
+				,menu_nm_9
+				,menu_nm_10
+				,menu_nm_11
+				,menu_nm_12
+				,menu_nm_13
+				,menu_nm_14
+				,menu_nm_15
+				,menu_nm_16
+				,menu_nm_17
+				,menu_nm_18
+				,menu_nm_19
+				,menu_nm_20
+				,content_1
+				,addr01
+				,addr02
+				,img_01_nm
+				,img_01_path
+				,img_02_nm
+				,img_02_path
+				,img_03_nm
+				,img_03_path
+				,img_04_nm
+				,img_04_path
+				,img_05_nm
+				,img_05_path
+				,img_06_nm
+				,img_06_path
+				,img_07_nm
+				,img_07_path
+				,img_08_nm
+				,img_08_path
+				,img_09_nm
+				,img_09_path
+				,img_10_nm
+				,img_10_path
+				,sub_img_nm
+				,sub_img_path
+				,main_img_nm
+				,main_img_path
+				,insert_date
+				,update_yn
+				,latitude 
+				,longitude 
+				,use_time_1
+				,use_time_2
+				,use_time_3
+
+				
+			)
+		VALUES
+			(
+				
+				#{food_no}
+				,#{travel_no}
+				,#{title}
+				,#{fd_nm}
+				,#{menu_nm_1}
+				,#{menu_nm_2}
+				,#{menu_nm_3}
+				,#{menu_nm_4}
+				,#{menu_nm_5}
+				,#{menu_nm_6}
+				,#{menu_nm_7}
+				,#{menu_nm_8}
+				,#{menu_nm_9}
+				,#{menu_nm_10}
+				,#{menu_nm_11}
+				,#{menu_nm_12}
+				,#{menu_nm_13}
+				,#{menu_nm_14}
+				,#{menu_nm_15}
+				,#{menu_nm_16}
+				,#{menu_nm_17}
+				,#{menu_nm_18}
+				,#{menu_nm_19}
+				,#{menu_nm_20}
+				,#{content_1}
+				,#{addr01}
+				,#{addr02}
+				,#{file_01_name}
+				,#{file_01_path}
+				,#{file_02_name}
+				,#{file_02_path}
+				,#{file_03_name}
+				,#{file_03_path}
+				,#{file_04_name}
+				,#{file_04_path}
+				,#{file_05_name}
+				,#{file_05_path}
+				,#{file_06_name}
+				,#{file_06_path}
+				,#{file_07_name}
+				,#{file_07_path}
+				,#{file_08_name}
+				,#{file_08_path}
+				,#{file_09_name}
+				,#{file_09_path}
+				,#{file_10_name}
+				,#{file_10_path}
+				,#{file_11_name}
+				,#{file_11_path}
+				,#{file_12_name}
+				,#{file_12_path}
+				,NOW()
+				,'Y'
+				,#{latitude}
+				,#{longitude} 
+				,#{use_time_1} 
+				,#{use_time_2} 
+				,#{use_time_3} 
+				
+				
+			)
+	</insert>
+	
+	<update id="update_food" parameterType="map">
+		UPDATE 
+			food_info
+		SET
+				title = #{title} 
+				,update_date = NOW()
+				,content_1 = #{content_1} 
+				,addr01 = #{addr01} 
+				,addr02 = #{addr02} 
+				,menu_nm_1 = #{menu_nm_1} 
+				,menu_nm_2 = #{menu_nm_2} 
+				,menu_nm_3 = #{menu_nm_3} 
+				,menu_nm_4 = #{menu_nm_4} 
+				,menu_nm_5 = #{menu_nm_5} 
+				,menu_nm_6 = #{menu_nm_6} 
+				,menu_nm_7 = #{menu_nm_7} 
+				,menu_nm_8 = #{menu_nm_8} 
+				,menu_nm_9 = #{menu_nm_9} 
+				,menu_nm_10 = #{menu_nm_10} 
+				,menu_nm_11 = #{menu_nm_11} 
+				,menu_nm_12 = #{menu_nm_12} 
+				,menu_nm_13 = #{menu_nm_13} 
+				,menu_nm_14 = #{menu_nm_14} 
+				,menu_nm_15 = #{menu_nm_15} 
+				,menu_nm_16 = #{menu_nm_16} 
+				,menu_nm_17 = #{menu_nm_17} 
+				,menu_nm_18 = #{menu_nm_18} 
+				,menu_nm_19 = #{menu_nm_19} 
+				,menu_nm_20 = #{menu_nm_20} 
+				,use_time_1 = #{use_time_1} 
+				,use_time_2 = #{use_time_2} 
+				,use_time_3 = #{use_time_3} 
+		  	  <if test="latitude !=null and latitude != ''">
+					,latitude = #{latitude} 
+			  </if>
+	   		  <if test="longitude !=null and longitude != ''">
+	   				,longitude = #{longitude} 
+	   		  </if>
+			  <if test="file_01_name !=null and file_01_name != ''">
+				 ,img_01_nm = #{file_01_name} 
+			    ,img_01_path = #{file_01_path} 
+			  </if>		
+			  <if test="file_02_name !=null and file_02_name != ''">
+				 ,img_02_nm = #{file_02_name} 
+			    ,img_02_path = #{file_02_path} 
+			  </if>		
+			  <if test="file_03_name !=null and file_03_name != ''">
+				 ,img_03_nm = #{file_03_name} 
+			    ,img_03_path = #{file_03_path} 
+			  </if>	
+			   <if test="file_04_name !=null and file_04_name != ''">
+				 ,img_04_nm = #{file_04_name} 
+			    ,img_04_path = #{file_04_path} 
+			  </if>		
+			   <if test="file_05_name !=null and file_05_name != ''">
+				 ,img_05_nm = #{file_05_name} 
+			    ,img_05_path = #{file_05_path} 
+			  </if>		
+			   <if test="file_06_name !=null and file_06_name != ''">
+				 ,img_06_nm = #{file_06_name} 
+			    ,img_06_path = #{file_06_path} 
+			  </if>		
+			   <if test="file_07_name !=null and file_07_name != ''">
+				 ,img_07_nm = #{file_07_name} 
+			    ,img_07_path = #{file_07_path} 
+			  </if>		
+			   <if test="file_08_name !=null and file_08_name != ''">
+				 ,img_08_nm = #{file_08_name} 
+			    ,img_08_path = #{file_08_path} 
+			  </if>		
+			   <if test="file_09_name !=null and file_09_name != ''">
+				 ,img_09_nm = #{file_09_name} 
+			    ,img_09_path = #{file_09_path} 
+			  </if>		
+			   <if test="file_10_name !=null and file_10_name != ''">
+				 ,img_10_nm = #{file_10_name} 
+			    ,img_10_path = #{file_10_path} 
+			  </if>		
+			   <if test="file_11_name !=null and file_11_name != ''">
+				 ,sub_img_nm = #{file_11_name} 
+			    ,sub_img_path = #{file_11_path} 
+			  </if>		
+			   <if test="file_12_name !=null and file_12_name != ''">
+				 ,main_img_nm = #{file_12_name} 
+			    ,main_img_path = #{file_12_path} 
+			  </if>		
+
+		WHERE
+			travel_no = #{travel_no} AND food_no = #{food_no} 
+	</update>
+	
+	
+	<update id="delete_food" parameterType="map">
+		DELETE 
+		FROM
+			food_info	
+		WHERE
+			travel_no = #{travel_no} AND food_no = #{food_no} 
+	</update>
+	
+	
+	<insert id="save_travel" parameterType="cmd.vo.TravelVO" useGeneratedKeys="true" keyProperty="travel_no">
+		/* 공지등록 */
+		INSERT INTO
+			travel_info
+			(
+
+				title
+				,sub_title
+				,add_info_1
+				,add_info_2
+				,add_info_3
+				,add_info_4
+				,add_info_5
+				,add_info_6
+				,add_info_7
+				,pay_nm_1
+				,pay_nm_2
+				,pay_nm_3
+				,pay_nm_4
+				,pay_kind_1
+				,pay_kind_2
+				,pay_kind_3
+				,pay_1_1
+				,pay_1_2
+				,pay_1_3
+				,pay_2_1
+				,pay_2_2
+				,pay_2_3
+				,pay_3_1
+				,pay_3_2
+				,pay_3_3
+				,pay_4_1
+				,pay_4_2
+				,pay_4_3
+				,info_1
+				,info_2
+				,info_3
+				,info_4
+				,info_5
+				,info_6
+				,info_7
+				,use_time_1
+				,use_time_2
+				,use_time_3
+				,fac_1_yn
+				,fac_2_yn
+				,fac_3_yn
+				,fac_4_yn
+				,fac_5_yn
+				,fac_6_yn
+				,fac_7_yn
+				,fac_8_yn
+				,addr01
+				,addr02
+				,fd_nm_1
+				,fd_nm_2
+				,fd_nm_3
+				,fd_nm_4
+				,fd_nm_5
+				,fd_nm_6
+				,fd_nm_7
+				,fd_nm_8
+				,fd_nm_9
+				,fd_nm_10
+				,fd_no_1
+				,fd_no_2
+				,fd_no_3
+				,fd_no_4
+				,fd_no_5
+				,fd_no_6
+				,fd_no_7
+				,fd_no_8
+				,fd_no_9
+				,fd_no_10
+				,fd_yn
+				,hashtag
+				,img_01_nm
+				,img_01_path
+				,img_02_nm
+				,img_02_path
+				,img_03_nm
+				,img_03_path
+				,img_04_nm
+				,img_04_path
+				,img_05_nm
+				,img_05_path
+				,img_06_nm
+				,img_06_path
+				,img_07_nm
+				,img_07_path
+				,img_08_nm
+				,img_08_path
+				,img_09_nm
+				,img_09_path
+				,img_10_nm
+				,img_10_path
+				,img_11_nm
+				,img_11_path
+				,img_12_nm
+				,img_12_path
+				,img_13_nm
+				,img_13_path
+				,img_14_nm
+				,img_14_path
+				,img_15_nm
+				,img_15_path
+				,img_16_nm
+				,img_16_path
+				,img_17_nm
+				,img_17_path
+				,img_18_nm
+				,img_18_path
+				,img_19_nm
+				,img_19_path
+				,img_20_nm
+				,img_20_path
+				,main_img_nm
+				,main_img_path
+				,insert_date
+				,latitude
+				,longitude
+
+			)
+		VALUES
+			(
+				
+				#{title}
+				,#{sub_title}
+				,#{add_info_1}
+				,#{add_info_2}
+				,#{add_info_3}
+				,#{add_info_4}
+				,#{add_info_5}
+				,#{add_info_6}
+				,#{add_info_7}
+				,#{pay_nm_1}
+				,#{pay_nm_2}
+				,#{pay_nm_3}
+				,#{pay_nm_4}
+				,#{pay_kind_1}
+				,#{pay_kind_2}
+				,#{pay_kind_3}
+				,#{pay_1_1}
+				,#{pay_1_2}
+				,#{pay_1_3}
+				,#{pay_2_1}
+				,#{pay_2_2}
+				,#{pay_2_3}
+				,#{pay_3_1}
+				,#{pay_3_2}
+				,#{pay_3_3}
+				,#{pay_4_1}
+				,#{pay_4_2}
+				,#{pay_4_3}
+				,#{info_1}
+				,#{info_2}
+				,#{info_3}
+				,#{info_4}
+				,#{info_5}
+				,#{info_6}
+				,#{info_7}
+				,#{use_time_1}
+				,#{use_time_2}
+				,#{use_time_3}
+				,#{fac_1_yn}
+				,#{fac_2_yn}
+				,#{fac_3_yn}
+				,#{fac_4_yn}
+				,#{fac_5_yn}
+				,#{fac_6_yn}
+				,#{fac_7_yn}
+				,#{fac_8_yn}
+				,#{addr01}
+				,#{addr02}
+				,#{fd_nm_1}
+				,#{fd_nm_2}
+				,#{fd_nm_3}
+				,#{fd_nm_4}
+				,#{fd_nm_5}
+				,#{fd_nm_6}
+				,#{fd_nm_7}
+				,#{fd_nm_8}
+				,#{fd_nm_9}
+				,#{fd_nm_10}
+				,#{fd_no_1}
+				,#{fd_no_2}
+				,#{fd_no_3}
+				,#{fd_no_4}
+				,#{fd_no_5}
+				,#{fd_no_6}
+				,#{fd_no_7}
+				,#{fd_no_8}
+				,#{fd_no_9}
+				,#{fd_no_10}
+				,#{fd_yn}
+				,#{hashtag}
+				,#{file_01_name}
+				,#{file_01_path}
+				,#{file_02_name}
+				,#{file_02_path}
+				,#{file_03_name}
+				,#{file_03_path}
+				,#{file_04_name}
+				,#{file_04_path}
+				,#{file_05_name}
+				,#{file_05_path}
+				,#{file_06_name}
+				,#{file_06_path}
+				,#{file_07_name}
+				,#{file_07_path}
+				,#{file_08_name}
+				,#{file_08_path}
+				,#{file_09_name}
+				,#{file_09_path}
+				,#{file_10_name}
+				,#{file_10_path}
+				,#{file_11_name}
+				,#{file_11_path}
+				,#{file_12_name}
+				,#{file_12_path}
+				,#{file_13_name}
+				,#{file_13_path}
+				,#{file_14_name}
+				,#{file_14_path}
+				,#{file_15_name}
+				,#{file_15_path}
+				,#{file_16_name}
+				,#{file_16_path}
+				,#{file_17_name}
+				,#{file_17_path}
+				,#{file_18_name}
+				,#{file_18_path}
+				,#{file_19_name}
+				,#{file_19_path}
+				,#{file_20_name}
+				,#{file_20_path}
+				,#{file_21_name}
+				,#{file_21_path}
+				,NOW()
+				,#{latitude}
+				,#{longitude}
+			)
+	</insert>
+	
+	<update id="update_travel" parameterType="map">
+		UPDATE 
+			travel_info
+		SET
+				title = #{title} 
+				,update_date = NOW()
+				,sub_title = #{sub_title} 
+				,add_info_1 = #{add_info_1} 
+				,add_info_2 = #{add_info_2} 
+				,add_info_3 = #{add_info_3} 
+				,add_info_4 = #{add_info_4} 
+				,add_info_5 = #{add_info_5} 
+				,add_info_6 = #{add_info_6} 
+				,add_info_7 = #{add_info_7} 
+				,pay_nm_1 = #{pay_nm_1} 
+				,pay_nm_2 = #{pay_nm_2} 
+				,pay_nm_3 = #{pay_nm_3} 
+				,pay_nm_4 = #{pay_nm_4} 
+				,pay_kind_1 = #{pay_kind_1} 
+				,pay_kind_2 = #{pay_kind_2} 
+				,pay_kind_3 = #{pay_kind_3} 
+				,pay_1_1 = #{pay_1_1} 
+				,pay_1_2 = #{pay_1_2} 
+				,pay_1_3 = #{pay_1_3} 
+				,pay_2_1 = #{pay_2_1} 
+				,pay_2_2 = #{pay_2_2} 
+				,pay_2_3 = #{pay_2_3} 
+				,pay_3_1 = #{pay_3_1} 
+				,pay_3_2 = #{pay_3_2} 
+				,pay_3_3 = #{pay_3_3} 
+				,pay_4_1 = #{pay_4_1} 
+				,pay_4_2 = #{pay_4_2} 
+				,pay_4_3 = #{pay_4_3} 
+				,info_1 = #{info_1} 
+				,info_2 = #{info_2} 
+				,info_3 = #{info_3} 
+				,info_4 = #{info_4} 
+				,info_5 = #{info_5} 
+				,info_6 = #{info_6} 
+				,info_7 = #{info_7} 
+				,use_time_1 = #{use_time_1} 
+				,use_time_2 = #{use_time_2} 
+				,use_time_3 = #{use_time_3} 
+				,fac_1_yn = #{fac_1_yn} 
+				,fac_2_yn = #{fac_2_yn} 
+				,fac_3_yn = #{fac_3_yn} 
+				,fac_4_yn = #{fac_4_yn} 
+				,fac_5_yn = #{fac_5_yn} 
+				,fac_6_yn = #{fac_6_yn} 
+				,fac_7_yn = #{fac_7_yn} 
+				,fac_8_yn = #{fac_8_yn} 
+				,addr01 = #{addr01} 
+				,addr02 = #{addr02} 
+				,fd_nm_1 = #{fd_nm_1} 
+				,fd_nm_2 = #{fd_nm_2} 
+				,fd_nm_3 = #{fd_nm_3} 
+				,fd_nm_4 = #{fd_nm_4} 
+				,fd_nm_5 = #{fd_nm_5} 
+				,fd_nm_6 = #{fd_nm_6} 
+				,fd_nm_7 = #{fd_nm_7} 
+				,fd_nm_8 = #{fd_nm_8} 
+				,fd_nm_9 = #{fd_nm_9} 
+				,fd_nm_10 = #{fd_nm_10} 
+				,fd_no_1 = #{fd_no_1} 
+				,fd_no_2 = #{fd_no_2} 
+				,fd_no_3 = #{fd_no_3} 
+				,fd_no_4 = #{fd_no_4} 
+				,fd_no_5 = #{fd_no_5} 
+				,fd_no_6 = #{fd_no_6} 
+				,fd_no_7 = #{fd_no_7} 
+				,fd_no_8 = #{fd_no_8} 
+				,fd_no_9 = #{fd_no_9} 
+				,fd_no_10 = #{fd_no_10} 
+				,fd_yn = #{fd_yn} 
+				,hashtag = #{hashtag} 
+			  <if test="latitude !=null and latitude != ''">
+					,latitude = #{latitude} 
+			  </if>
+	   		  <if test="longitude !=null and longitude != ''">
+	   				,longitude = #{longitude} 
+	   		  </if>
+			  <if test="file_01_name !=null and file_01_name != ''">
+				 ,img_01_nm = #{file_01_name} 
+			    ,img_01_path = #{file_01_path} 
+			  </if>		
+			  <if test="file_02_name !=null and file_02_name != ''">
+				 ,img_02_nm = #{file_02_name} 
+			    ,img_02_path = #{file_02_path} 
+			  </if>		
+			  <if test="file_03_name !=null and file_03_name != ''">
+				 ,img_03_nm = #{file_03_name} 
+			    ,img_03_path = #{file_03_path} 
+			  </if>	
+			   <if test="file_04_name !=null and file_04_name != ''">
+				 ,img_04_nm = #{file_04_name} 
+			    ,img_04_path = #{file_04_path} 
+			  </if>		
+			   <if test="file_05_name !=null and file_05_name != ''">
+				 ,img_05_nm = #{file_05_name} 
+			    ,img_05_path = #{file_05_path} 
+			  </if>		
+			   <if test="file_06_name !=null and file_06_name != ''">
+				 ,img_06_nm = #{file_06_name} 
+			    ,img_06_path = #{file_06_path} 
+			  </if>		
+			   <if test="file_07_name !=null and file_07_name != ''">
+				 ,img_07_nm = #{file_07_name} 
+			    ,img_07_path = #{file_07_path} 
+			  </if>		
+			   <if test="file_08_name !=null and file_08_name != ''">
+				 ,img_08_nm = #{file_08_name} 
+			    ,img_08_path = #{file_08_path} 
+			  </if>		
+			   <if test="file_09_name !=null and file_09_name != ''">
+				 ,img_09_nm = #{file_09_name} 
+			    ,img_09_path = #{file_09_path} 
+			  </if>		
+			   <if test="file_10_name !=null and file_10_name != ''">
+				 ,img_10_nm = #{file_10_name} 
+			    ,img_10_path = #{file_10_path} 
+			  </if>		
+			   <if test="file_11_name !=null and file_11_name != ''">
+				 ,img_11_nm = #{file_11_name} 
+			    ,img_11_path = #{file_11_path} 
+			  </if>		
+			   <if test="file_12_name !=null and file_12_name != ''">
+				 ,img_12_nm = #{file_12_name} 
+			    ,img_12_path = #{file_12_path} 
+			  </if>		
+			   <if test="file_13_name !=null and file_13_name != ''">
+				 ,img_13_nm = #{file_13_name} 
+			    ,img_13_path = #{file_13_path} 
+			  </if>		
+			   <if test="file_14_name !=null and file_14_name != ''">
+				 ,img_14_nm = #{file_14_name} 
+			    ,img_14_path = #{file_14_path} 
+			  </if>		
+			   <if test="file_15_name !=null and file_15_name != ''">
+				 ,img_15_nm = #{file_15_name} 
+			    ,img_15_path = #{file_15_path} 
+			  </if>		
+			   <if test="file_16_name !=null and file_16_name != ''">
+				 ,img_16_nm = #{file_16_name} 
+			    ,img_16_path = #{file_16_path} 
+			  </if>		
+			   <if test="file_17_name !=null and file_17_name != ''">
+				 ,img_17_nm = #{file_17_name} 
+			    ,img_17_path = #{file_17_path} 
+			  </if>		
+			   <if test="file_18_name !=null and file_18_name != ''">
+				 ,img_18_nm = #{file_18_name} 
+			    ,img_18_path = #{file_18_path} 
+			  </if>		
+			   <if test="file_19_name !=null and file_19_name != ''">
+				 ,img_19_nm = #{file_19_name} 
+			    ,img_19_path = #{file_19_path} 
+			  </if>		
+			   <if test="file_20_name !=null and file_20_name != ''">
+				 ,img_20_nm = #{file_20_name} 
+			    ,img_20_path = #{file_20_path} 
+			  </if>		
+			   <if test="file_21_name !=null and file_21_name != ''">
+				 ,main_img_nm = #{file_21_name} 
+			    ,main_img_path = #{file_21_path} 
+			  </if>					       
+			
+		WHERE
+			travel_no = #{travel_no}
+	</update>
+	
+	
+	<update id="delete_travel" parameterType="map">
+		DELETE 
+		FROM
+			travel_info	
+		WHERE
+			travel_no = #{travel_no}
+	</update>
+	
+	
+		<select id="get_all_food_list" parameterType="map" resultType="cmd.vo.FoodVO">
+		SELECT *
+		FROM food_info 
+		WHERE 1=1
+	    <if test="travel_no != null and travel_no != ''">
+	   		AND
+	   		travel_no = #{travel_no}
+	    </if>		
+	     <if test="food_no != null and food_no != ''">
+	   		AND
+	   		food_no = #{food_no}
+	    </if>				
+		
+						
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="get_party_list" parameterType="map" resultType="cmd.vo.PartyVO">
+		SELECT party_no 
+			,title
+			,main_img_nm
+			,main_img_path
+		FROM party_info 
+		WHERE 1=1
+		<if test="hashtag !=null and hashtag != ''">
+			AND hashtag = #{hashtag}
+		</if>						
+		
+		ORDER BY party_no DESC  
+						
+	</select>
+	
+	
+	<select id="get_all_party_list" parameterType="map" resultType="cmd.vo.PartyVO">
+		SELECT *
+		FROM party_info 
+		WHERE 1=1
+		<if test="hashtag !=null and hashtag != ''">
+			AND hashtag = #{hashtag}
+		</if>						
+		
+	     <if test="party_no != null and party_no != ''">
+	   		AND
+	   		party_no = #{party_no}
+	    </if>				
+		ORDER BY party_no DESC  
+						
+	</select>
+	
+	
+	<insert id="save_party" parameterType="cmd.vo.PartyVO" >
+		/* 공지등록 */
+		INSERT INTO
+			party_info
+			(
+
+				title
+				
+				,add_info_1
+				,add_info_2
+				
+				,pay_nm_1
+				,pay_nm_2
+				,pay_nm_3
+				,pay_nm_4
+				,pay_kind_1
+				,pay_kind_2
+				,pay_kind_3
+				,pay_1_1
+				,pay_1_2
+				,pay_1_3
+				,pay_2_1
+				,pay_2_2
+				,pay_2_3
+				,pay_3_1
+				,pay_3_2
+				,pay_3_3
+				,pay_4_1
+				,pay_4_2
+				,pay_4_3
+				,info_1
+				,info_2
+				,info_3
+				,info_4
+				,info_5
+				,info_6
+				,info_7
+				,info_8
+				,info_9
+				,info_10
+				,use_time_1
+				,use_time_2
+				,use_time_3
+				
+				,addr01
+				,addr02
+				
+				,hashtag
+				,img_01_nm
+				,img_01_path
+				,img_02_nm
+				,img_02_path
+				,img_03_nm
+				,img_03_path
+				,img_04_nm
+				,img_04_path
+				,img_05_nm
+				,img_05_path
+				,img_06_nm
+				,img_06_path
+				,img_07_nm
+				,img_07_path
+				,img_08_nm
+				,img_08_path
+				,main_img_nm
+				,main_img_path
+				,insert_date
+				,latitude
+				,longitude
+
+			)
+		VALUES
+			(
+				
+				#{title}
+				
+				,#{add_info_1}
+				,#{add_info_2}
+				
+				,#{pay_nm_1}
+				,#{pay_nm_2}
+				,#{pay_nm_3}
+				,#{pay_nm_4}
+				,#{pay_kind_1}
+				,#{pay_kind_2}
+				,#{pay_kind_3}
+				,#{pay_1_1}
+				,#{pay_1_2}
+				,#{pay_1_3}
+				,#{pay_2_1}
+				,#{pay_2_2}
+				,#{pay_2_3}
+				,#{pay_3_1}
+				,#{pay_3_2}
+				,#{pay_3_3}
+				,#{pay_4_1}
+				,#{pay_4_2}
+				,#{pay_4_3}
+				,#{info_1}
+				,#{info_2}
+				,#{info_3}
+				,#{info_4}
+				,#{info_5}
+				,#{info_6}
+				,#{info_7}
+				,#{info_8}
+				,#{info_9}
+				,#{info_10}
+				,#{use_time_1}
+				,#{use_time_2}
+				,#{use_time_3}
+				
+				,#{addr01}
+				,#{addr02}
+				
+				,#{hashtag}
+				,#{file_01_name}
+				,#{file_01_path}
+				,#{file_02_name}
+				,#{file_02_path}
+				,#{file_03_name}
+				,#{file_03_path}
+				,#{file_04_name}
+				,#{file_04_path}
+				,#{file_05_name}
+				,#{file_05_path}
+				,#{file_06_name}
+				,#{file_06_path}
+				,#{file_07_name}
+				,#{file_07_path}
+				,#{file_08_name}
+				,#{file_08_path}
+				,#{file_09_name}
+				,#{file_09_path}
+
+				,NOW()
+				,#{latitude}
+				,#{longitude}
+			)
+	</insert>
+	
+	<update id="update_party" parameterType="map">
+		UPDATE 
+			party_info
+		SET
+				title = #{title} 
+				,update_date = NOW()
+				
+				,add_info_1 = #{add_info_1} 
+				,add_info_2 = #{add_info_2} 
+			
+				,pay_nm_1 = #{pay_nm_1} 
+				,pay_nm_2 = #{pay_nm_2} 
+				,pay_nm_3 = #{pay_nm_3} 
+				,pay_nm_4 = #{pay_nm_4} 
+				,pay_kind_1 = #{pay_kind_1} 
+				,pay_kind_2 = #{pay_kind_2} 
+				,pay_kind_3 = #{pay_kind_3} 
+				,pay_1_1 = #{pay_1_1} 
+				,pay_1_2 = #{pay_1_2} 
+				,pay_1_3 = #{pay_1_3} 
+				,pay_2_1 = #{pay_2_1} 
+				,pay_2_2 = #{pay_2_2} 
+				,pay_2_3 = #{pay_2_3} 
+				,pay_3_1 = #{pay_3_1} 
+				,pay_3_2 = #{pay_3_2} 
+				,pay_3_3 = #{pay_3_3} 
+				,pay_4_1 = #{pay_4_1} 
+				,pay_4_2 = #{pay_4_2} 
+				,pay_4_3 = #{pay_4_3} 
+				,info_1 = #{info_1} 
+				,info_2 = #{info_2} 
+				,info_3 = #{info_3} 
+				,info_4 = #{info_4} 
+				,info_5 = #{info_5} 
+				,info_6 = #{info_6} 
+				,info_7 = #{info_7} 
+				,info_8 = #{info_8} 
+				,info_9 = #{info_9} 
+				,info_10 = #{info_10} 
+				,use_time_1 = #{use_time_1} 
+				,use_time_2 = #{use_time_2} 
+				,use_time_3 = #{use_time_3} 
+				
+				,addr01 = #{addr01} 
+				,addr02 = #{addr02} 
+				
+				,hashtag = #{hashtag} 
+			  <if test="latitude !=null and latitude != ''">
+					,latitude = #{latitude} 
+			  </if>
+	   		  <if test="longitude !=null and longitude != ''">
+	   				,longitude = #{longitude} 
+	   		  </if>
+			  <if test="file_01_name !=null and file_01_name != ''">
+				 ,img_01_nm = #{file_01_name} 
+			    ,img_01_path = #{file_01_path} 
+			  </if>		
+			  <if test="file_02_name !=null and file_02_name != ''">
+				 ,img_02_nm = #{file_02_name} 
+			    ,img_02_path = #{file_02_path} 
+			  </if>		
+			  <if test="file_03_name !=null and file_03_name != ''">
+				 ,img_03_nm = #{file_03_name} 
+			    ,img_03_path = #{file_03_path} 
+			  </if>	
+			   <if test="file_04_name !=null and file_04_name != ''">
+				 ,img_04_nm = #{file_04_name} 
+			    ,img_04_path = #{file_04_path} 
+			  </if>		
+			   <if test="file_05_name !=null and file_05_name != ''">
+				 ,img_05_nm = #{file_05_name} 
+			    ,img_05_path = #{file_05_path} 
+			  </if>		
+			   <if test="file_06_name !=null and file_06_name != ''">
+				 ,img_06_nm = #{file_06_name} 
+			    ,img_06_path = #{file_06_path} 
+			  </if>		
+			   <if test="file_07_name !=null and file_07_name != ''">
+				 ,img_07_nm = #{file_07_name} 
+			    ,img_07_path = #{file_07_path} 
+			  </if>		
+			   <if test="file_08_name !=null and file_08_name != ''">
+				 ,img_08_nm = #{file_08_name} 
+			    ,img_08_path = #{file_08_path} 
+			  </if>		
+			  
+			   <if test="file_09_name !=null and file_09_name != ''">
+				 ,main_img_nm = #{file_09_name} 
+			    ,main_img_path = #{file_09_path} 
+			  </if>					       
+			,sort_no = #{sort_no} 
+		WHERE
+			party_no = #{party_no}
+	</update>
+	
+	
+	<update id="delete_party" parameterType="map">
+		DELETE 
+		FROM
+			party_info	
+		WHERE
+			party_no = #{party_no}
+	</update>
+	
+		
+
+		
+	
+	
+</mapper>

@@ -1,0 +1,146 @@
+
+/* 메인 페이지 */
+
+.page{
+	
+}
+
+.mask{
+	background:#fff; 
+	opacity:.35;
+	filter:Alpha(Opacity=35);
+}
+
+/* 테이블 관련 css */
+table{
+	border-top: 3px solid #00bfef;
+	border-left: 1px solid #7d7465;
+	border-bottom: 1px solid #7d7465;
+	margin-top: 1.5em; 
+	text-align: center;
+	font-size: 12px;
+	border-collapse: collapse;
+	
+}
+tr{
+	height: 30px;
+}
+td{
+	border-bottom: 1px solid #7d7465;
+	border-right: 1px solid #7d7465;
+}
+.td_header{
+	background-color: #B2EBF4;
+	font-weight: 900;
+	font-size: 15px;
+}
+.td_memu{
+	background-color: #BDBDBD;
+	color: #fff;
+	font-weight: 900;
+}
+
+/* 전체 페이지 배경색 설정 */
+.ui-overlay-a, .ui-page-theme-a, .ui-page-theme-a .ui-panel-wrapper {
+    background-color: #fff !important;
+}
+
+input:focus, textarea:focus{
+	outline: none;
+}
+
+.main_header{
+	background-color: #fff !important; 
+	border-color: #00bfef !important;
+	border-bottom: 2px solid #00bfef;
+	margin-bottom: 1em;
+	position: fixed;
+}
+
+.main_header img{
+	margin-right: 0.2em;
+}
+
+.background_img{
+	background-size: 100%;
+	background-repeat: no-repeat; 
+	height: 100%; 
+	width: 100%;
+}
+
+
+/* 여행 메인 페이지 */
+.travel_main_a{
+	 border-bottom: 1px solid #e8dfc2;
+}
+
+.travel_main_b{
+	 border-bottom: 2px solid #ff9682;
+}
+
+.travel_main_c{
+	 border-right: 1px solid #e8dfc2;
+}
+
+/* 여행 상세페이지 */
+
+.div_css{
+	border-bottom: 1px solid #00bfef;
+	margin-bottom: 1em;
+}
+
+.div_css p{
+	color: #c7ccc7;
+	font-size: 10px;
+	
+}
+
+.div_map_button{
+	z-index: 1; 
+	position: absolute;
+	right: 0;"
+}
+
+/* 음식 상세 페이지 */
+.textarea_explain{
+	margin-top: .5em;
+	font-size: 20px !important;
+	height: 150px !important;
+    background-color: transparent !important;
+    resize: none !important;
+    color: #00ccff !important;
+    border:none !important;
+    text-shadow:none !important;
+    margin-bottom: .5em;
+    width: 100%;
+}
+
+/* 축제 메인 페이지 */
+.div_main{
+	margin-bottom: 3em;
+}
+
+/* 공지사항 */
+.notice_div_list{
+	border-bottom: 1px solid #00bfef;
+}
+.textarea_notice_details{
+	margin-top: 2em;
+	font-size: 16px !important;
+    background-color: transparent !important;
+    border:none !important;
+    text-shadow:none !important;
+    width: 100%;
+    resize: none !important;
+}
+.span_date{
+	position: fixed;
+	right: 1em; 
+	margin-top: 0.5em;
+}
+
+
+/* 검색 페이지 input CSS */
+.ui-input-text{
+	border : 0px solid !important;
+}
