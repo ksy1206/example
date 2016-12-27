@@ -2,50 +2,5 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="main">
-
-	<select id="get_notice_list" parameterType="map" resultType="map">
-		SELECT
-			notice_no
-			, title
-		FROM
-			notice
-		ORDER BY insert_date DESC;
-	</select>
-	
-	<select id="get_notice_no" parameterType="map" resultType="cmd.vo.NoticeVO">
-		SELECT
-			*
-		FROM
-			notice
-		WHERE
-			notice_no = #{notice_no}
-	</select>
-	
-	<select id="get_inquire" resultType="map">
-		SELECT
-			*
-		FROM
-			add_info
-	</select>
-	
-	<select id="get_party_list" parameterType="map" resultType="map">
-		SELECT party_no
-			,main_img_nm
-			,main_img_path
-		FROM party_info 
-		WHERE hashtag LIKE CONCAT('%',#{hashtag},'%')
-		ORDER BY party_no DESC
-		<!-- 		LIMIT 0, 9		 -->
-	</select>
-	
-	<select id="get_travel_list" parameterType="map" resultType="map">
-		SELECT travel_no
-			,main_img_nm
-			,main_img_path
-		FROM travel_info 
-		WHERE hashtag LIKE CONCAT('%',#{hashtag},'%')
-		ORDER BY travel_no DESC
-		<!-- 		LIMIT 0, 9		 -->
-	</select>
 	
 </mapper>

@@ -28,9 +28,6 @@ import org.springframework.web.servlet.ModelAndView;
 import helper.util.FileUtil;
 import helper.util.ThumbnailImageMakeHelper;
 
-
-
-
 @Controller
 @RequestMapping("/comm")
 public class CommController {
@@ -38,7 +35,7 @@ public class CommController {
 
 	
 	/**
-	 * 첨부파일 등록(일반)
+	 * 첨부파일 등록(Img)
 	 * 
 	 * @param req
 	 * @param res
@@ -94,7 +91,7 @@ public class CommController {
 					new FileOutputStream(destination));
 			
 			
-			//썸네일은 나중에 오픈
+			//썸네일
 			String dest = "";
 			if (fileSize >= 0) {
 				String thumbNail_file_name = "";
@@ -198,7 +195,7 @@ public class CommController {
 
 			String fileDestPath = "";
 			String file_title = pMap.get("file_title").toString();
-			fileDestPath = doc_root + File.separator + "img" + File.separator + file_title;
+			fileDestPath = doc_root + File.separator + "file" + File.separator + file_title;
 
 			int file_cnt = Integer.parseInt(pMap.get("file_cnt").toString());
 
